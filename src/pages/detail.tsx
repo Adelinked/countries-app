@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="text-sm w-full bg-lightBg dark:bg-darkBg dark:text-white">
       <Head>
-        <title>Create Next App</title>
+        <title>Countries App</title>
         <meta name="description" content="rest api countries app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

@@ -61,7 +61,13 @@ const CountryPadDetail: React.FC<{
   return (
     <div className="flex flex-col md:flex-row md:justify-between w-full h-full">
       <div className="relative w-full h-[250px] sm:h-[460px] md:h-[400px] ">
-        <Image src={flag} alt={name} fill={true} className=" object-cover  " />
+        <Image
+          src={flag}
+          alt={name}
+          fill={true}
+          className=" object-cover"
+          priority
+        />
       </div>
       <div className="flex flex-col w-full mt-24 md:mt-12 md:ml-24 lg:ml-36 ">
         <p className=" min-h-[100px] md:min-h-[66px] font-[800] text-4xl md:text-3xl ">

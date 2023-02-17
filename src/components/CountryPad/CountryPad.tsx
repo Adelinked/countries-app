@@ -20,6 +20,7 @@ const CountryPad: React.FC<{
           alt={name}
           fill={true}
           className=" object-cover rounded-t-md "
+          priority
         />
       </div>
       <div className="flex flex-col items-start pl-8 md:pl-6 pr-2 w-full  ">

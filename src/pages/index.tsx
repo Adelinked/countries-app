@@ -1,31 +1,67 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Filter from "@/components/Filter";
 import NavBar from "@/components/NavBar";
 import Head from "next/head";
 import { HiSearch } from "react-icons/hi";
 import CountryPad from "@/components/CountryPad";
-export default function Home({ serverData }: { serverData: any[] }) {
-  let pageData = serverData;
+import useOnScreen from "@/hooks/useOnScreen";
 
+let portionLen = 12;
+export default function Home({ serverData }: { serverData: any[] }) {
+  const serveDataLen = serverData.length;
+  const [renderedData, setRendredData] = useState(
+    serveDataLen > portionLen ? serverData.slice(0, portionLen) : serverData
+  );
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("");
+  const bottomRef = useRef(null);
+  const [bottomRefValue] = useOnScreen(bottomRef);
 
-  pageData =
-    search.length > 0
-      ? pageData.filter((i: any) =>
-          i.name.toLowerCase().includes(search.toLowerCase())
-        )
-      : pageData;
+  useEffect(() => {
+    if (renderedData.length >= serveDataLen) return;
+    let pageData = serverData;
 
-  pageData =
-    region.length > 0
-      ? pageData.filter((i: any) => i.region == region)
-      : pageData;
+    pageData =
+      search.length > 0
+        ? pageData.filter((i: any) =>
+            i.name.toLowerCase().includes(search.toLowerCase())
+          )
+        : pageData;
+
+    pageData =
+      region.length > 0
+        ? pageData.filter((i: any) => i.region == region)
+        : pageData;
+    const additionalData = [
+      ...pageData.slice(renderedData.length, renderedData.length + portionLen),
+    ];
+    if (bottomRefValue) {
+      setRendredData([...renderedData, ...additionalData]);
+    }
+  }, [bottomRefValue]);
+
+  useEffect(() => {
+    if (!region && !search) return;
+    let pageData = renderedData;
+
+    pageData =
+      search.length > 0
+        ? pageData.filter((i: any) =>
+            i.name.toLowerCase().includes(search.toLowerCase())
+          )
+        : pageData;
+
+    pageData =
+      region.length > 0
+        ? pageData.filter((i: any) => i.region == region)
+        : pageData;
+    setRendredData(pageData);
+  }, [region, search]);
 
   return (
     <div className="text-sm w-full min-h-screen bg-lightBg dark:bg-darkBg dark:text-white ">
       <Head>
-        <title>Create Next App</title>
+        <title>Countries App</title>
         <meta name="description" content="rest api countries app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -44,9 +80,9 @@ export default function Home({ serverData }: { serverData: any[] }) {
           </div>
           <Filter region={region} setRegion={setRegion} />
         </div>
-        {pageData ? (
+        {renderedData ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 md:gap-10 w-full mt-12 px-2 sm:px-12 md:px-0 ">
-            {pageData.map((i: any, index: number) => (
+            {renderedData.map((i: any, index: number) => (
               <CountryPad key={i.name} {...i} num={index} />
             ))}
           </div>
@@ -55,6 +91,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
             Loading...
           </div>
         )}
+        <div ref={bottomRef} />
       </main>
       <footer className="text-center text-sm">
         Challenge by{" "}
@@ -90,6 +127,5 @@ export async function getServerSideProps({ req, res }: { req: any; res: any }) {
     `https://restcountries.com/v2/all?fields=name,population,region,capital,flag`
   );
   const serverData = await responce.json();
-
   return { props: { serverData } };
 }
