@@ -1,15 +1,40 @@
 import Image from "next/image";
-import localData from "../../../data";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+
+const fields = `flag,population,region,nativeName,subregion,topLevelDomain,currencies,languages,borders,`;
 
 const CountryPadDetail: React.FC<{
   name: string;
 }> = ({ name }) => {
   const router = useRouter();
   const { data, error } = useSWR(
-    "https://restcountries.com/v2/name/" + name,
-    (...args) => fetch(...args).then((res) => res.json())
+    `https://restcountries.com/v2/name/${name}?fields=${fields}`,
+    async (url: string) => {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data;
+    },
+    { revalidateOnMount: true }
+  );
+
+  const { data: data2, error: error2 } = useSWR(
+    () => {
+      if (!data) return null;
+
+      const { borders } = data[0];
+      const codes = borders.reduce(
+        (acc: string, curr: string, index: number) =>
+          index < borders.length - 1 ? acc + `${curr},` : acc + `${curr}`,
+        ""
+      );
+      return `https://restcountries.com/v2/alpha?codes=${codes}`;
+    },
+    async (url: string) => {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data;
+    }
   );
 
   if (!data)
@@ -28,11 +53,9 @@ const CountryPadDetail: React.FC<{
     topLevelDomain,
     currencies,
     languages,
-    borders,
   } = data[0];
-  const borderCountries = borders?.map(
-    (i: string) => localData.filter((j: any) => j.alpha3Code == i)[0].name
-  );
+  const borderCountries = data2?.map((i: any) => i.name);
+
   const nfObject = new Intl.NumberFormat("en-US");
   const formatedPopulation = nfObject.format(population);
   return (

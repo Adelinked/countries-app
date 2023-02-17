@@ -3,19 +3,20 @@ import { HiMoon, HiOutlineMoon } from "react-icons/hi";
 import { useAppContext } from "@/context";
 
 let storedTheme: string | null;
-if (typeof window !== "undefined")
-  storedTheme = localStorage.getItem("countriesTheme") ?? "light";
-
+if (typeof window !== "undefined") {
+  storedTheme =
+    JSON.parse(localStorage.getItem("countries") as string)?.theme ?? "light";
+}
 const NavBar = () => {
   const { globalState, setGlobalState } = useAppContext();
-
   useEffect(() => {
-    setGlobalState(storedTheme);
+    setGlobalState(storedTheme ?? "light");
   }, []);
 
   useEffect(() => {
+    if (!globalState) return;
     document.documentElement.className = globalState;
-    localStorage.setItem("countriesTheme", globalState ?? "light");
+    localStorage.setItem("countries", JSON.stringify({ theme: globalState }));
   }, [globalState]);
 
   const switchTheme = () => {

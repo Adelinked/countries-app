@@ -9,11 +9,11 @@ const nunito_Sans = Nunito_Sans({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={nunito_Sans.className}>
+    <div className={nunito_Sans.className}>
       <AppWrapper value={pageProps.value}>
         <Component {...pageProps} />
       </AppWrapper>
-    </main>
+    </div>
   );
 }
 

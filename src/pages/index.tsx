@@ -4,9 +4,9 @@ import NavBar from "@/components/NavBar";
 import Head from "next/head";
 import { HiSearch } from "react-icons/hi";
 import CountryPad from "@/components/CountryPad";
+export default function Home({ serverData }: { serverData: any[] }) {
+  let pageData = serverData;
 
-export default function Home({ data }: { data: any[] }) {
-  let pageData = data;
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("");
 
@@ -32,13 +32,13 @@ export default function Home({ data }: { data: any[] }) {
       </Head>
       <NavBar />
       <main className=" dark:bg-darkMainBg text-sm my-7 md:my-12 mx-5 md:mx-20 pb-20 md:pb-11">
-        <div className="flex flex-col md:flex-row justify-between select-none">
-          <div className="select-none flex items-center md:w-[480px] px-10 md:px-5 py-4 rounded-md text-lightInput dark:text-white dark:bg-darkElmts">
+        <div className="flex flex-col md:flex-row justify-between select-none ">
+          <div className="select-none flex items-center md:w-[390px] lg:w-[450px] px-10 md:px-5 py-4 rounded-md text-lightInput dark:text-white dark:bg-darkElmts">
             {" "}
             <HiSearch className="mr-8 w-5 h-5" />
             <input
               placeholder="Search for a country... "
-              className=" dark:bg-darkElmts  w-full p-1"
+              className=" dark:bg-darkElmts w-full p-1"
               onChange={(e) => setSearch(e.target.value)}
             />{" "}
           </div>
@@ -86,8 +86,10 @@ export async function getServerSideProps({ req, res }: { req: any; res: any }) {
     "Cache-Control",
     "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
   );
-  const responce = await fetch(`https://restcountries.com/v2/all`);
-  const data = await responce.json();
+  const responce = await fetch(
+    `https://restcountries.com/v2/all?fields=name,population,region,capital,flag`
+  );
+  const serverData = await responce.json();
 
-  return { props: { data } };
+  return { props: { serverData } };
 }
