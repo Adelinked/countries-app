@@ -11,7 +11,7 @@ const CountryPad: React.FC<{
   const router = useRouter();
   return (
     <div
-      className="flex flex-col dark:bg-darkElmts cursor-pointer h-[420px] md:h-[340px] hover:mx-[-10px] hover:md:m-[-8px] rounded-md"
+      className="flex flex-col bg-white dark:bg-darkElmts cursor-pointer h-[420px] md:h-[340px] hover:mx-[-10px] hover:md:m-[-8px] rounded-md"
       onClick={() => router.push(`/detail?name=${name}`)}
     >
       <div className="relative h-[48%] w-full rounded-md">

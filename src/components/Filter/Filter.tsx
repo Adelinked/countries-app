@@ -8,9 +8,9 @@ const Filter: React.FC<{
 }> = ({ region, setRegion }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className=" select-none relative flex items-center w-[250px] md:w-[200px] mt-12 md:mt-0 px-8 md:px-6 py-6  dark:bg-darkElmts rounded-md ">
+    <div className=" select-none relative flex items-center w-[250px] md:w-[200px] mt-12 md:mt-0 px-8 md:px-6 py-6 bg-white dark:bg-darkElmts rounded-md ">
       <p
-        className=" w-full dark:bg-darkElmts cursor-pointer "
+        className=" w-full bg-white dark:bg-darkElmts cursor-pointer "
         onClick={() => {
           setOpen((o) => !o);
           //setRegion("");

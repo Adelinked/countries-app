@@ -125,7 +125,7 @@ const CountryPadDetail: React.FC<{
             {borderCountries?.length && borderCountries?.length > 0
               ? borderCountries?.map((i: string) => (
                   <span
-                    className="p-2 flex hover:font-[600] items-center cursor-pointer justify-center w-20 sm:w-44 md:w-24 text-sm sm:text-base   dark:bg-darkElmts rounded-md"
+                    className="p-2 flex hover:font-[600] items-center cursor-pointer justify-center w-20 sm:w-44 md:w-24 text-sm sm:text-base bg-white  dark:bg-darkElmts rounded-md"
                     key={i}
                     onClick={() => router.push(`/detail?name=${i}`)}
                   >

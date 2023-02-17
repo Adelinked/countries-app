@@ -19,7 +19,7 @@ export default function Home() {
       <main className="text-base min-h-screen mt-20 md:pb-80  mx-14 md:mx-20">
         <button
           onClick={() => router.push("/")}
-          className=" flex items-center dark:bg-darkElmts px-12 md:px-8 py-5 md:py-4 mb-32 md:mb-20 rounded-md hover:text-white hover:bg-black hover:dark:text-black hover:dark:bg-white  select-none"
+          className=" flex items-center bg-white dark:bg-darkElmts px-12 md:px-8 py-5 md:py-4 mb-32 md:mb-20 rounded-md hover:text-white hover:bg-black hover:dark:text-black hover:dark:bg-white  select-none"
         >
           <span className="flex items-center">
             {" "}

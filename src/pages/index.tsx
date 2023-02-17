@@ -42,7 +42,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
 
   useEffect(() => {
     if (!region && !search) return;
-    let pageData = renderedData;
+    let pageData = serverData;
 
     pageData =
       search.length > 0
@@ -55,6 +55,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
       region.length > 0
         ? pageData.filter((i: any) => i.region == region)
         : pageData;
+
     setRendredData(pageData);
   }, [region, search]);
 
@@ -67,20 +68,20 @@ export default function Home({ serverData }: { serverData: any[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      <main className=" dark:bg-darkMainBg text-sm my-7 md:my-12 mx-5 md:mx-20 pb-20 md:pb-11">
+      <main className="bg-lightBg dark:bg-darkMainBg text-sm my-7 md:my-12 mx-5 md:mx-20 pb-20 md:pb-11">
         <div className="flex flex-col md:flex-row justify-between select-none ">
-          <div className="select-none flex items-center md:w-[390px] lg:w-[450px] px-10 md:px-5 py-4 rounded-md text-lightInput dark:text-white dark:bg-darkElmts">
+          <div className="select-none flex items-center md:w-[390px] lg:w-[450px] px-10 md:px-5 py-4 rounded-md text-lightInput dark:text-white bg-white dark:bg-darkElmts">
             {" "}
             <HiSearch className="mr-8 w-5 h-5" />
             <input
               placeholder="Search for a country... "
-              className=" dark:bg-darkElmts w-full p-1"
+              className="bg-white dark:bg-darkElmts w-full p-1"
               onChange={(e) => setSearch(e.target.value)}
             />{" "}
           </div>
           <Filter region={region} setRegion={setRegion} />
         </div>
-        {renderedData ? (
+        {renderedData.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 md:gap-10 w-full mt-12 px-2 sm:px-12 md:px-0 ">
             {renderedData.map((i: any, index: number) => (
               <CountryPad key={i.name} {...i} num={index} />
@@ -88,7 +89,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
           </div>
         ) : (
           <div className="flex items-center justify-center w-full h-[200px] text-2xl font-[800]">
-            Loading...
+            No Country Found
           </div>
         )}
         <div ref={bottomRef} />
