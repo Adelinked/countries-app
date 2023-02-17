@@ -24,7 +24,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex select-none w-full text-base h-24 md:h-20 justify-between items-center px-5 bg-white dark:bg-darkElmts">
+    <header className="flex select-none w-full text-base h-24 md:h-20 justify-between items-center px-5 bg-white dark:bg-darkElmts">
       <h1 className="font-[800] lg:text-xl">Where in the world?</h1>
       <div className="font-[600] test-sm  flex justify-between items-center ">
         <span className=" cursor-pointer mr-3" onClick={() => switchTheme()}>
@@ -34,7 +34,7 @@ const NavBar = () => {
           {globalState == "dark" ? "light" : "dark"} Mode
         </p>
       </div>
-    </div>
+    </header>
   );
 };
 
