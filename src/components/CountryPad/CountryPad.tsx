@@ -9,6 +9,8 @@ const CountryPad: React.FC<{
   flag: string;
 }> = ({ name, population, region, capital, flag }) => {
   const router = useRouter();
+  const nfObject = new Intl.NumberFormat("en-US");
+  const formatedPopulation = nfObject.format(population);
   return (
     <div
       className="flex flex-col bg-white dark:bg-darkElmts cursor-pointer h-[420px] md:h-[340px] hover:mx-[-10px] hover:md:m-[-8px] rounded-md"
@@ -30,7 +32,7 @@ const CountryPad: React.FC<{
         <div>
           <p className="mb-3">
             <span className="font-[600] mb-3">Population:</span>{" "}
-            <span>{population}</span>
+            <span>{formatedPopulation}</span>
           </p>
           <p className="mb-3">
             <span className="font-[600]">Region:</span> <span>{region}</span>

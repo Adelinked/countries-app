@@ -15,19 +15,16 @@ export default function Home({ serverData }: { serverData: any[] }) {
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("");
   const bottomRef = useRef(null);
-  const [bottomRefValue] = useOnScreen(bottomRef);
-
+  const bottomRefValue = useOnScreen(bottomRef);
   useEffect(() => {
     if (renderedData.length >= serveDataLen) return;
     let pageData = serverData;
-
     pageData =
       search.length > 0
         ? pageData.filter((i: any) =>
             i.name.toLowerCase().includes(search.toLowerCase())
           )
         : pageData;
-
     pageData =
       region.length > 0
         ? pageData.filter((i: any) => i.region == region)
@@ -43,18 +40,17 @@ export default function Home({ serverData }: { serverData: any[] }) {
   useEffect(() => {
     if (!region && !search) return;
     let pageData = serverData;
+    if (search.length > 0) {
+      pageData = pageData.filter((i: any) =>
+        i.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    if (region.length > 0) {
+      pageData = pageData.filter((i: any) => i.region == region);
+    }
 
     pageData =
-      search.length > 0
-        ? pageData.filter((i: any) =>
-            i.name.toLowerCase().includes(search.toLowerCase())
-          )
-        : pageData;
-
-    pageData =
-      region.length > 0
-        ? pageData.filter((i: any) => i.region == region)
-        : pageData;
+      pageData.length > portionLen ? pageData.slice(0, portionLen) : pageData;
 
     setRendredData(pageData);
   }, [region, search]);

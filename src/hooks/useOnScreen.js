@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const useOnScreen = (ref) => {
   const [isIntersecting, setIntersecting] = useState(false);
@@ -10,6 +10,6 @@ const useOnScreen = (ref) => {
       observer.observe(ref.current);
     }
   }, [ref]);
-  return [isIntersecting];
+  return isIntersecting;
 };
 export default useOnScreen;
