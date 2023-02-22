@@ -16,6 +16,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
   const [region, setRegion] = useState("");
   const bottomRef = useRef(null);
   const bottomRefValue = useOnScreen(bottomRef);
+
   useEffect(() => {
     if (renderedData.length >= serveDataLen) return;
     let pageData = serverData;
