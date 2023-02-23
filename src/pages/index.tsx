@@ -62,7 +62,7 @@ export default function Home({ serverData }: { serverData: any[] }) {
         <title>Countries App</title>
         <meta name="description" content="rest api countries app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon-32x32.png" />
       </Head>
       <NavBar />
       <main className="bg-lightBg dark:bg-darkMainBg text-sm my-7 md:my-12 mx-5 md:mx-20 pb-20 md:pb-11">

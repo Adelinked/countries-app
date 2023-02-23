@@ -13,7 +13,7 @@ export default function Home() {
         <title>Countries App</title>
         <meta name="description" content="rest api countries app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon-32x32.png" />
       </Head>
       <NavBar />
       <main className="text-base min-h-screen mt-20 md:pb-80  mx-14 md:mx-20">

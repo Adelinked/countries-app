@@ -1,29 +1,16 @@
-import { useEffect } from "react";
 import { HiMoon, HiOutlineMoon } from "react-icons/hi";
 import { useAppContext } from "@/context";
 
 const NavBar = () => {
   const { globalState, setGlobalState } = useAppContext();
 
-  useEffect(() => {
-    if (!globalState) return;
-    document.documentElement.className = globalState;
-    localStorage.setItem("countries", JSON.stringify({ theme: globalState }));
-  }, [globalState]);
-
   const switchTheme = () => {
-    const initialClientTheme = document.documentElement.className;
-    setGlobalState((oldTheme: any) =>
-      !oldTheme
-        ? initialClientTheme === "dark"
-          ? "light"
-          : "dark"
-        : oldTheme === "dark"
-        ? "light"
-        : "dark"
-    );
-  };
+    setGlobalState((oldTheme: any) => (oldTheme === "dark" ? "light" : "dark"));
 
+    const newTheme = globalState === "dark" ? "light" : "dark";
+    document.documentElement.className = newTheme;
+    localStorage.setItem("countries", JSON.stringify({ theme: newTheme }));
+  };
   return (
     <header className="flex select-none w-full text-base h-24 md:h-20 justify-between items-center px-5 bg-white dark:bg-darkElmts">
       <h1 className="font-[800] lg:text-xl">Where in the world?</h1>
