@@ -121,9 +121,19 @@ export async function getServerSideProps({ req, res }: { req: any; res: any }) {
     "Cache-Control",
     "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
   );
-  const responce = await fetch(
-    `https://restcountries.com/v2/all?fields=name,population,region,capital,flag`
-  );
-  const serverData = await responce.json();
-  return { props: { serverData } };
+  let serverData = [];
+  try {
+    const responce = await fetch(
+      `https://restcountries.com/v2/all?fields=name,population,region,capital,flag`
+    );
+    serverData = await responce.json();
+  } catch (e) {
+    serverData = (await import("data")).data.map((i) => {
+      const { name, population, region, capital, flag } = i;
+      return { name, population, region, capital, flag };
+    });
+  }
+  return {
+    props: { serverData: JSON.parse(JSON.stringify(serverData)) },
+  };
 }
